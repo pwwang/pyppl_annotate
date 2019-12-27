@@ -25,6 +25,6 @@ setup(
     packages=[],
     package_dir={"": "."},
     package_data={},
-    install_requires=['pyppl'],
+    install_requires=['pyppl==3.*'],
     extras_require={"dev": ["pytest", "pytest-cov"]},
 )

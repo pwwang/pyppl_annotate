@@ -44,7 +44,7 @@ def _options_parser(text):
 		if line[:1] not in (' ', '\t'):
 			try:
 				name, rest = re.split(r'[\s:]', line, maxsplit = 1)
-			except ValueError as exc:
+			except ValueError:
 				name, rest = line.strip(), ''
 			rest = rest.strip()
 			rtype = default = ''
@@ -112,7 +112,7 @@ def _config_formatter(text, proc):
 			options[key].default = val
 	return options
 
-class Annotate:
+class Annotate: # pylint: disable=too-few-public-methods
 	"""@API
 	The annotate for process
 	"""
@@ -134,6 +134,14 @@ class Annotate:
 		self.config      = self.section('config', _config_formatter)
 
 	def section(self, name, formatter = None):
+		"""@API
+		Get the section
+		@params:
+			name (str): The name of the section
+			formatter (callable): The formatter
+		@returns:
+			(OrderedDiot): The information of the section
+		"""
 		if name not in self.sections:
 			return None
 		if formatter:
@@ -145,6 +153,7 @@ class Annotate:
 
 @hookimpl
 def proc_init(proc):
+	"""Add the config"""
 	# it's process-specific, we should be let runtime_config override it
 	proc.add_config('annotate',
 		default   = '',

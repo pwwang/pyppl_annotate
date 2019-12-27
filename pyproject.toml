@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-pyppl = "*"
+pyppl = "3.*"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
