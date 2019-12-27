@@ -15,7 +15,7 @@ readme = ''
 setup(
     long_description=readme,
     name='pyppl_annotate',
-    version='0.0.1',
+    version='0.0.2',
     description='Adding long description/annotations for PyPPL processes.',
     python_requires='==3.*,>=3.6.0',
     author='pwwang',
