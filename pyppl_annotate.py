@@ -1,7 +1,6 @@
 """Add annotation to PyPPL processes"""
 import re
 import textwrap
-from functools import partial
 from diot import OrderedDiot, Diot
 from pyppl.plugin import hookimpl
 from pyppl.utils import always_list
@@ -158,4 +157,5 @@ def proc_init(proc):
 	proc.add_config('annotate',
 		default   = '',
 		runtime   = 'ignore',
-		converter = partial(Annotate, proc = proc))
+		converter = lambda annotate: annotate if isinstance(annotate, Annotate) \
+			else Annotate(annotate, proc = proc))
