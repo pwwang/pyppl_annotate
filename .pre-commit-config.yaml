@@ -14,10 +14,10 @@ repos:
     rev: v2.4.4
     hooks:
     -   id: pylint
-        files: ^pyppl/.+$
+        files: ^pyppl_annotate.py$
         pass_filenames: false
         types: [python]
-        args: [pyppl]
+        args: [pyppl_annotate]
 -   repo: local
     hooks:
     -   id: poetry2setuppy
@@ -38,4 +38,4 @@ repos:
         language: system
         args: [tests/]
         pass_filenames: false
-        files: ^tests/.+$|^pyppl/.+$
+        files: ^tests/.+$|^pyppl_annotate.py$
