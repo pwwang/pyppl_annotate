@@ -109,4 +109,17 @@ def test_hook():
 	abc
 	"""))
 	pan.proc_init(pHook)
-	pHook.config.annotate.description = 'abc\n'
+	assert pHook.config.annotate.description == 'abc\n'
+
+def test_input():
+	pInput = Proc()
+	pan.proc_init(pInput)
+	pInput.config.annotate = 'x\n@input:\n@output:\n@config:\n@args:'
+	pInput.input = {'a': [1]}
+	assert pInput.config.annotate.description == 'x\n'
+	assert pInput.config.annotate.input == {'a': {'default': '',
+       'desc': '',
+       'type': 'var'}}
+	assert pInput.config.annotate.output == {}
+	assert pInput.config.annotate.config == {}
+	assert pInput.config.annotate.args == {}

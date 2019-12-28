@@ -126,11 +126,31 @@ class Annotate: # pylint: disable=too-few-public-methods
 		anno             = textwrap.dedent(anno.lstrip('\n'))
 		self.proc        = proc
 		self.sections    = _sections_parser(anno)
-		self.description = self.section('description')
-		self.input       = self.section('input', _input_formatter)
-		self.output      = self.section('output', _output_formatter)
-		self.args        = self.section('args', _args_formatter)
-		self.config      = self.section('config', _config_formatter)
+
+	@property
+	def description(self):
+		"""Description section"""
+		return self.section('description')
+
+	@property
+	def input(self):
+		"""Input section"""
+		return self.section('input', _input_formatter)
+
+	@property
+	def output(self):
+		"""Output section"""
+		return self.section('output', _output_formatter)
+
+	@property
+	def args(self):
+		"""Args section"""
+		return self.section('args', _args_formatter)
+
+	@property
+	def config(self):
+		"""Config section"""
+		return self.section('config', _config_formatter)
 
 	def section(self, name, formatter = None):
 		"""@API
