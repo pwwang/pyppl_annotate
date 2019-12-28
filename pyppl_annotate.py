@@ -5,7 +5,7 @@ from diot import OrderedDiot, Diot
 from pyppl.plugin import hookimpl
 from pyppl.utils import always_list
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 def _sections_parser(text):
 	ret = OrderedDiot()
