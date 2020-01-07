@@ -41,20 +41,32 @@ def _options_parser(text):
 			raise ValueError('Unexpected indention found at line: %s' % line)
 
 		if line[:1] not in (' ', '\t'):
-			try:
-				name, rest = re.split(r'[\s:]', line, maxsplit = 1)
-			except ValueError:
-				name, rest = line.strip(), ''
-			rest = rest.strip()
-			rtype = default = ''
-			if rest[:1] == '(' and '):' in rest:
-				rtype, rest = rest[1:].split('):', 1)
-			if 'Default:' in rest:
-				rest, default = rest.split('Default:', 1)
-			rest = rest.strip() + '\n'
-			default = default.strip()
-			ret[name] = Diot(type = rtype, desc = rest, default = default)
+			# tool:
+			# tool: blah
+			# `tool`: blah
+			# tool(type): blah
+			# tool(type): blah. Default: xxx
+			# `tool:type`: blah
+			# `tool (type)` : blah
+			matches = re.match(
+				r'^(`?)([\w_.-]+)[\s:(]*([\w_.-]*)?\)?\1\s*:\s*(.*?)\s*(?:Default:\s*(.+))?$',
+				line
+			)
+			if not matches:
+				raise ValueError(
+					'Cannot recognize item format, expect: '
+					'"name (type): description. Default: xxx"'
+				)
+			name = matches.group(2)
+			ret[name] = Diot(
+				type = matches.group(3),
+				desc = matches.group(4) + '\n',
+				default = matches.group(5)
+			)
 		else:
+			line_notab = line.lstrip('\t')
+			ntabs = len(line) - len(line_notab)
+			line = '  ' * ntabs + line_notab
 			ret[name].desc += line + '\n'
 	return ret
 
